@@ -98,13 +98,13 @@
 	    <repository>
 	      <id>nexus</id>
 	      <name>Ajaam Releases Nexus Repository</name>  
-	      <url>http://18.220.131.131:8888/Ajaam/repository/ebay-java-app-release/</url>
+	      <url>http://18.220.131.131:8888/Ajaam/repository/web/</url>
 	    </repository>
 	    
 	    <snapshotRepository>
 	      <id>nexus</id>
 	      <name>Ajaam Snapshot Nexus Repository </name>
-	      <url>http://18.220.131.131:8888/Ajaam/repository/ebay-java-app-snapshot/</url>
+	      <url>http://18.220.131.131:8888/Ajaam/repository/web/</url>
 	    </snapshotRepository>
 	</distributionManagement>
 	
