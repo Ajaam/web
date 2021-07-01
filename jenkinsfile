@@ -1,37 +1,30 @@
-node
-{
+node {
 def mavenHome = tool name: "maven3.8.1"
-    
-    stage("1. git clone")
-    {
-       git credentialsId: 'GitCredentials', url: 'https://github.com/myLandmakTechnology/maven-web-app'
-    }
-    
-    stage("2. Build")
-    {
-        sh "${mavenHome}/bin/mvn clean package"
-
-        // bat mvn clean package  - for winows OS
-    }
-    stage('3. SonarQubeReport')
-    {
-         sh "${mavenHome}/bin/mvn sonar:sonar"
-    }
-    stage('4. Nexus')
-     {
-         sh "${mavenHome}/bin/mvn deploy"
-    }
-    stage('5. Deploy')
-    {
-        deploy adapters: [tomcat9(credentialsId: 'Tomcat-Credentials', path: '', url: 'http://54.163.156.108:8888/')], contextPath: null, war: 'target/*war'
-    }
-
-    stage('6. Email Notification')
-    {
-
-emailext body: '''Hi
-Build Status
-Landmark Technology
-+ 1 437 215 2483''', recipientProviders: [developers()], subject: 'Build status', to: 'legah2000@gmail.com'    
-    }
+        stage("CodeClone") {
+        git credentialsId: 'git-credentials', url: 'https://github.com/Ajaam/maven-web-app'
    }
+        stage('mavenBuild') {
+        sh "${mavenHome}/bin/mvn clean package"
+    }
+        stage('CodeQuality') {
+        sh "${mavenHome}/bin/mvn sonar:sonar"
+    }
+}
+  stage('emailQualityIssues') {
+    emailext body: '''Thanks
+
+Ajaam''', recipientProviders: [developers()], subject: 'status of build', to: 'asabiaweh@gmail.com'
+  }
+        stage('UploadNexus') {
+        sh "${mavenHome}/bin/mvn deploy"
+    }
+        stage('UploadNexus') {
+        sh "${mavenHome}/bin/mvn deploy"
+    }
+        stage('DeployTomcat') {
+        deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://18.116.231.60:7000/')], contextPath: null, war: 'target/*war'
+    }
+        Stage('EmailNotification') {
+        emailext body: '''Thanks,
+        Ajaam''', subject: 'Pipeline project build status', to: 'asabiaweh@gmail.com'
+    }
